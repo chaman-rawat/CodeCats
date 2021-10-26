@@ -3,26 +3,18 @@
 
 int main(int argc, char const *argv[])
 {
-    int number,
-        sum = 0,
-        sum_odd = 0,
-        sum_even = 0;
+    int num;
 
     printf("Enter a natural number: ");
-    scanf("%d", &number);
+    scanf("%d", &num);
 
     // Calculate sum numbers
-    for (int i = 1; i <= number; i++) {
-        printf("%d ", i);
-        sum += i;
-        if (i & 1)
-            sum_odd += i;
-        else
-            sum_even += i;
-    }
-    
-    printf("\nThe Sum of Natural Numbers upto %d terms: %d\n", number, sum);
-    printf("The Sum of Odd Natural Numbers upto %d terms: %d\n", number, sum_odd);
-    printf("The Sum of Even Natural Numbers upto %d terms: %d\n", number, sum_even);
+    int sum = num * (num + 1) / 2,
+        sum_odd = (num & 1) ? (num / 2 + 1)*(num / 2 + 1) : (num / 2) * (num / 2),
+        sum_even = sum - sum_odd;
+
+    printf("\nThe Sum of Natural Numbers upto %d terms: %d\n", num, sum);
+    printf("The Sum of Odd Natural Numbers upto %d terms: %d\n", num, sum_odd);
+    printf("The Sum of Even Natural Numbers upto %d terms: %d\n", num, sum_even);
     return 0;
 }
