@@ -15,13 +15,24 @@ int main()
     printf("Target: ");
     scanf("%d", &target);
 
-    for (int i = 0; i < size; i++)
-        for (int j = i + 1; j < size; j++)
-            if (arr[i] + arr[j] == target)
-            {
-                printf("Output: [%d, %d]\n", i, j);
-                return 0;
-            }
+    // Two Pointer Algorithm
+    int start = 0,
+        end = size - 1,
+        sum;
+
+    while (start < end)
+    {
+        sum = arr[start] + arr[end];
+        if (sum < target)
+            start++;
+        else if (sum > target)
+            end--;
+        else
+        {
+            printf("Output: [%d, %d]\n", start, end);
+            return 0;
+        }
+    }
 
     printf("No solution!\n");
     return 1;
