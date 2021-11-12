@@ -15,27 +15,27 @@ int main()
     scanf("%d", &target);
 
     int start = 0,
-        middle,
+        mid,
         end = size - 1,
         is_found = 0;
 
     while (start <= end)
     {
-        middle = (start + end) / 2;
-        if (arr[middle] == target)
+        mid = (start + end) / 2;
+        if (arr[mid] == target)
         {
             is_found++;
             break;
         }
-        else if (arr[middle] < target)
-            start = middle + 1;
+        else if (arr[mid] < target)
+            start = mid + 1;
         else
-            end = middle - 1;
+            end = mid - 1;
     }
 
     if (is_found)
-        printf("Output: %d\n", middle);
+        printf("Output: %d\n", mid);
     else
-        printf("Output: %d\n", middle + ((arr[middle > target]) ? 1 : - 1));
+        printf("Output: %d\n", mid + ((arr[mid] > target) ? 0 :  1));
     return 0;
 }
