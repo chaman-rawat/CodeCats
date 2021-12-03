@@ -30,14 +30,14 @@ int roman_to_int(char *roman)
         for (int j = 0; j < symbol_len; j++)
             if (roman[i] == symbol[j]) // Symbol Identified
             {
-                if (roman[i + 1] == symbol[j + 1]) // Check special cases
+                if ((j + 1) < symbol_len && roman[i + 1] == symbol[j + 1]) // Check special cases
                 {
                     int exponent = count_digits(value[j + 1] - 1) - 1;
                     int subtract = pow(10, exponent);
                     integer += value[j + 1] - subtract;
                     i++; // skip next letter
                 }
-                else if (roman[i + 1] == symbol[j + 2]) // Check special cases
+                else if ((j + 2) < symbol_len && roman[i + 1] == symbol[j + 2]) // Check special cases
                 {
                     int exponent = count_digits(value[j + 2] - 1) - 1;
                     int subtract = pow(10, exponent);
