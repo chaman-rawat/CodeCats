@@ -141,33 +141,37 @@ void add_to_cart(struct Items item)
     user_cart.is_empty = false;
 }
 
-// Displays users bill and reset cart
-void place_order(void)
+// Resets user cart
+void reset_cart(void)
 {
-    clrscr();
-    cout << "==================================================" << endl;
-    cout << "||                   POKEMART                   ||" << endl;
-    cout << "==================================================" << endl
-         << endl;
-
-    cout << "                  ORDER PLACED" << endl;
-    cout << "                  ------------" << endl
-         << endl;
-
-    cout << "   Name : " << user_login.current_user.name << endl;
-    cout << "   Total Amout: ₹" << user_cart.total_sum << endl;
-    cout << "   Delivery Address : " << user_login.current_user.address << endl;
-    cout << "   Phone no. : " << user_login.current_user.mobile_number << endl
-         << endl;
-
-    cout << "             Contact Us: " << contact_us << endl
-         << endl;
-    cout << "==================================================" << endl;
-
     user_cart.is_empty = true;
     user_cart.total_sum = 0;
     for (int i = 0; i < total_items; i++)
         user_cart.cart_items[i] = 0;
+}
+
+// Store users order bill to the order.txt file
+void place_order(void)
+{
+    ofstream fout("data/order.txt", ios::app);
+    fout << "==================================================" << endl;
+    fout << "||                ORDER PLACED                  ||" << endl;
+    fout << "==================================================" << endl << endl;
+
+    fout << "   Name : " << user_login.current_user.name << endl;
+    fout << "   Total Amout: ₹" << user_cart.total_sum << endl;
+    fout << "   Delivery Address : " << user_login.current_user.address << endl;
+    fout << "   Phone no. : " << user_login.current_user.mobile_number << endl;
+    fout << "   Email ID: " << user_login.current_user.email << endl << endl;
+
+    fout << "             Contact Us: " << contact_us << endl << endl;
+    fout << "==================================================" << endl << endl << endl;
+    fout.close();
+
+    reset_cart();
+
+    clrscr();
+    cout << "Your order is placed successfully." << endl;
 }
 
 // Deletes selected items from the cart
@@ -187,15 +191,13 @@ void delete_cart_item(void)
     }
 
     int item_id;
-    cout << endl
-         << "Enter Item ID you want to remove: ";
+    cout << endl << "Enter Item ID you want to remove: ";
     cin >> item_id;
     item_id--;
     if (!user_cart.cart_items[item_id] || item_id < 0 || item_id >= total_items)
     {
         cout << "Item ID doesn't found in your cart!!!" << endl;
-        cout << endl
-             << "-- Press Enter to try again --";
+        cout << endl << "-- Press Enter to try again --";
         getch();
         delete_cart_item();
         return;
@@ -210,8 +212,7 @@ void delete_cart_item(void)
             user_cart.is_empty = false;
 
     cout << "'" << items[item_id].item_name << "' Deleted from your cart." << endl;
-    cout << endl
-         << "-- Press Enter to continue --";
+    cout << endl << "-- Press Enter to continue --";
     getch();
 }
 
