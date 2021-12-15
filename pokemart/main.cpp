@@ -28,8 +28,8 @@ int main()
             break;
 
         case 4:
-            cout << endl
-                 << "Thanks for visiting us, have a good day!" << endl;
+            cout << endl << "Thanks for visiting us, have a good day!" << endl;
+            free_memory();
             return 0;
             break;
 
@@ -45,11 +45,7 @@ int main()
             break;
         }
 
-        cout << endl
-             << "-- Press Enter to continue --";
+        cout << endl << "-- Press Enter to continue --";
         getch();
     }
-
-    free_memory();
-    return 0;
 }
