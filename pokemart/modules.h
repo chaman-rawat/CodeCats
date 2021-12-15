@@ -119,10 +119,19 @@ void login(void)
         cout << "Username not found, Try again!" << endl;
         cout << "Username: ";
         cin >> username;
+        try_left--;
+        if (try_left < 0)
+        {
+            clrscr();
+            cout << "It look likes you don't have an username, please Sign Up for a new account!" << endl;
+            return;
+        }
     }
 
+    try_left = 3;
     cout << "Password: ";
     cin >> password;
+
     while (!validate_user(username, password) && try_left)
     {
         cout << "Password does not match, Try again!"
@@ -130,8 +139,10 @@ void login(void)
         cout << "Password: ";
         cin >> password;
     }
+
     if (try_left)
         user_login.is_login = true;
+
     clrscr();
     if (user_login.is_login)
         cout << "Succesfully Logged in" << endl;
@@ -259,5 +270,7 @@ void logout(void)
     if (!user_login.is_login)
         cout << "Successfully Logout" << endl;
     else
-        cout << "Error Logging Out" << endl;
+        cout << "Please logging first" << endl;
+
+    reset_cart();
 }
