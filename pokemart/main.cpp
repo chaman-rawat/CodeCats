@@ -2,7 +2,7 @@
 
 int main()
 {
-    initial_setup();
+    initial_setup(); // loads data from external files
     while (true)
     {
         int choice = display_menu();
@@ -33,7 +33,7 @@ int main()
             return 0;
             break;
 
-        case 9:
+        case 9: // hidden menu for developers
             clrscr();
             cout << "All users list" << endl;
             cout << "-----------------" << endl;
