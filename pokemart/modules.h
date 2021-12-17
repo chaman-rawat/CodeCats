@@ -1,7 +1,7 @@
 // Main modules are defined here
 #include "helpers.h"
 
-int display_menu()
+int display_menu(void)
 {
     clrscr();
     int choice;
@@ -35,6 +35,7 @@ int display_menu()
     cin >> choice;
     return choice;
 }
+
 
 void display_items(void)
 {
@@ -94,6 +95,7 @@ void display_items(void)
     }
 }
 
+
 void login(void)
 {
     clrscr();
@@ -149,6 +151,7 @@ void login(void)
     else
         cout << "Error Logging in!" << endl;
 }
+
 
 void cart(void)
 {
@@ -214,6 +217,7 @@ void cart(void)
     }
 }
 
+
 void signup(void)
 {
     clrscr();
@@ -262,6 +266,7 @@ void signup(void)
     clrscr();
     cout << "Successfully Signed Up" << endl;
 }
+
 
 void logout(void)
 {

@@ -1,6 +1,5 @@
 // All global variable defined here
 char contact_us[20];
-
 int total_items;
 
 struct Users
