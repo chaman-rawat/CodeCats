@@ -5,6 +5,7 @@
 #include "globals.h"
 using namespace std;
 
+
 // Clears console screen
 void clrscr(void)
 {
@@ -12,12 +13,14 @@ void clrscr(void)
     cout << "\033[2J\033[1;1H";
 }
 
+
 // Take a character from user
 void getch(void)
 {
     cin.get();
     cin.get();
 }
+
 
 // Compares two strings
 bool strcmp(char *s1, char *s2)
@@ -28,21 +31,32 @@ bool strcmp(char *s1, char *s2)
     return true;          // Strings aren't equal
 }
 
+
 // Set value to the 'contact_us' global variable
 void setup_contact_us(void)
 {
-    ifstream infile;
-    infile.open("data/contact_us.txt");
-    if (!infile)
-        cout << "Error Opening File!!!";
-    infile >> contact_us;
-    infile.close();
+    ifstream fin("data/contact_us.txt");
+    if (!fin)
+    {
+        cout << "Error Opening File!" << endl;
+        return;
+    }
+
+    fin >> contact_us;
+    fin.close();
 }
+
 
 // Set value of global variable total_items
 void count_total_items(void)
 {
     ifstream fin("data/items.txt");
+    if (!fin)
+    {
+        cout << "Error Opening File!" << endl;
+        return;
+    }
+
     char c;
     while (fin.get(c))
         if (c == '\n')
@@ -51,11 +65,25 @@ void count_total_items(void)
     return;
 }
 
+
 // Returns a pointer to all items array from the items.txt
 struct Items *load_items(void)
 {
     ifstream fin("data/items.txt");
+    if (!fin)
+    {
+        cout << "Error Opening File!" << endl;
+        return NULL;
+    }
+
     struct Items *items = new struct Items[total_items];
+    if (items == NULL)
+    {
+        cout << "Memory could not be assigned!" << endl;
+        return NULL;
+    }
+
+
     for (int i = 0; !fin.eof(); i++)
     {
         items[i].item_id = i + 1;
@@ -68,6 +96,7 @@ struct Items *load_items(void)
     return items;
 }
 
+
 // Used for loading values from data files
 void initial_setup(void)
 {
@@ -75,12 +104,19 @@ void initial_setup(void)
     count_total_items();
     items = load_items();
     user_cart.cart_items = new int[total_items]();
+    if (user_cart.cart_items == NULL)
+    {
+        cout << "Memory could not be assigned!" << endl;
+        return;
+    }
 }
+
 
 // Checks if an given username already exists or not
 bool is_user_exist(char *username)
 {
     ifstream fin("data/users.txt");
+
     struct Users user;
 
     while (fin.read((char *)&user, sizeof(struct Users)))
@@ -92,6 +128,7 @@ bool is_user_exist(char *username)
     fin.close();
     return false;
 }
+
 
 // Hash function (for passwords)
 unsigned long hash_me(const char *str)
@@ -106,18 +143,32 @@ unsigned long hash_me(const char *str)
     return hash;
 }
 
+
 // Add a new user account to the users.txt file
 void save_new_user(struct Users *user)
 {
     ofstream fout("data/users.txt", ios::app);
+    if (!fout)
+    {
+        cout << "Error Opening File!" << endl;
+        return;
+    }
+
     fout.write((char *)user, sizeof(struct Users));
     fout.close();
 }
+
 
 // Check credential of a given users (for login authentication)
 bool validate_user(char *username, char *password)
 {
     ifstream fin("data/users.txt");
+    if (!fin)
+    {
+        cout << "Error Opening File!" << endl;
+        return false;
+    }
+
     struct Users user;
 
     while (fin.read((char *)&user, sizeof(struct Users)))
@@ -132,6 +183,7 @@ bool validate_user(char *username, char *password)
     return false;
 }
 
+
 // Add given item to the user_cart
 void add_to_cart(struct Items item)
 {
@@ -140,6 +192,7 @@ void add_to_cart(struct Items item)
     user_cart.cart_items[item.item_id - 1]++;
     user_cart.is_empty = false;
 }
+
 
 // Resets user cart
 void reset_cart(void)
@@ -150,10 +203,17 @@ void reset_cart(void)
         user_cart.cart_items[i] = 0;
 }
 
+
 // Store users order bill to the order.txt file
 void place_order(void)
 {
     ofstream fout("data/order.txt", ios::app);
+    if (!fout)
+    {
+        cout << "Error Opening File!" << endl;
+        return;
+    }
+
     fout << "==================================================" << endl;
     fout << "||                ORDER PLACED                  ||" << endl;
     fout << "==================================================" << endl << endl;
@@ -173,6 +233,7 @@ void place_order(void)
     clrscr();
     cout << "Your order is placed successfully." << endl;
 }
+
 
 // Deletes selected items from the cart
 void delete_cart_item(void)
@@ -216,6 +277,7 @@ void delete_cart_item(void)
     getch();
 }
 
+
 // Frees the memory assigned to pointers
 void free_memory(void)
 {
@@ -223,10 +285,17 @@ void free_memory(void)
     delete[] user_cart.cart_items;
 }
 
+
 // To list all accounts (for developers)
 void get_all_user(void)
 {
     ifstream fin("data/users.txt");
+    if (!fin)
+    {
+        cout << "Error Opening File!" << endl;
+        return;
+    }
+
     int user_count = 0;
     struct Users user;
     while (fin.read((char *)&user, sizeof(struct Users)))
