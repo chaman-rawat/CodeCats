@@ -4,9 +4,9 @@ Solution of [CodeCats](https://github.com/CodecatsSociety) miniproject problem.
 
 ## How to run
 
-- Make sure you have g++ (the GNU C++ compiler) installed in your system.
-- Compile program using : ```g++ main.cpp```
-- Run the program use : ```./a.out```
+- Make sure your system have g++ (the GNU C++ compiler) installed : ```g++ --version```
+- Compile the program using : ```g++ main.cpp```
+- Now run the program using : ```./a.out``` or ```./a.exe``` (on Windows)
 
 ## FAQ
 
